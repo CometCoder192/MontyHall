@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MontyHall </title>
+    <title>MontyHall </title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        body {
+            font-family: 'Century Gothic';
+            text-align: center;
+        } 
+        span {
+            font-size: 2rem;
+            margin: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-	<div id="change">Wins after switching: </div>
-	<div id="change2">Wins after swaying: </div>
-	<script type="text/javascript">
-		function playMontyHall(toSwitch) {
+    <h1>Monty Hall Problem Simulation</h1>
+    <hr>
+    <h6>(Simulations of both scenarios are run differently)</h6>
+    <div id="change">Wins after switching: <span id="sw"></span> </div>
+    <br>
+    <div id="change2">Wins after swaying: <span id="no"></span> </div>
+    <script type="text/javascript">
+        
+    function simulateMontyHall(toSwitch) {
 
     let carIsIn = Math.floor(Math.random() * 3);
 
-    let doorSelected = Math.floor(Math.random() * 3);
+    let selectedDoor = Math.floor(Math.random() * 3);
 
-    let revealedDoor = [0,1,2].find((door) => door !== carIsIn && door !== doorSelected);
+    let revealedDoor = [0,1,2].find((door) => door !== carIsIn && door !== selectedDoor);
 
     if(toSwitch){
-        return carIsIn === [0,1,2].find((door) => door !== doorSelected && door !== revealedDoor)
+        return carIsIn === [0,1,2].find((door) => door !== selectedDoor && door !== revealedDoor)
     }
     else {
-        return carIsIn === doorSelected
+        return carIsIn === selectedDoor
     }
 
 }
@@ -29,21 +45,21 @@ function simulateGame(num, toSwitch) {
     let gamesWon = 0;
 
     for(let i = 0; i < num; i++){
-        gamesWon += playMontyHall(toSwitch)
+        gamesWon += simulateMontyHall(toSwitch)
     }
 
     return gamesWon
 }
 
 
-console.log(simulateGame(1000, toSwitch = true));  // close to 666
+  // close to 666
 
-console.log(simulateGame(1000, toSwitch = false));  // close to 333
 
-var div = document.getElementById('change');
-var div2 = document.getElementById('change2');
-div.innerHTML += simulateGame(1000, toSwitch = true);
-div2.innerHTML += simulateGame(1000, toSwitch = false);
-	</script>
+
+var div = document.getElementById('sw');
+var div2 = document.getElementById('no');
+div.innerHTML += simulateGame(100, toSwitch = true)+"%";
+div2.innerHTML += simulateGame(100, toSwitch = false)+"%";
+    </script>
 </body>
 </html>
